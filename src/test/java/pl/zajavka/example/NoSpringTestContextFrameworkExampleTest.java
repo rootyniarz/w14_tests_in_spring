@@ -1,28 +1,25 @@
 package pl.zajavka.example;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+//@ExtendWith(SpringExtension.class)
+//@ContextConfiguration(classes = ConfigScanBean.class)
+@SpringJUnitConfig(classes = ConfigScanBean.class)
 public class NoSpringTestContextFrameworkExampleTest {
 
+    @Autowired
     private ExampleBeanService exampleBeanService;
 
     @BeforeEach
     public void setUp() {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(ConfigScanBean.class);
-        exampleBeanService = applicationContext.getBean(ExampleBeanService.class);
-
         Assertions.assertNotNull(exampleBeanService);
-    }
-
-    @AfterEach
-    public void tearDown() {
-        exampleBeanService = null;
-        Assertions.assertNull(exampleBeanService);
     }
 
     @Test
